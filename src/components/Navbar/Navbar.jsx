@@ -9,6 +9,7 @@ const Navbar = () => {
         </div>
 
         <div className={s.item}><NavLink className={({ isActive }) => isActive ? s.active : undefined} to='/dialogs'>Messages</NavLink></div>
+        <div className={s.item}><NavLink className={({ isActive }) => isActive ? s.active : undefined} to='/users'>Users</NavLink></div>
         {/*<div className={s.item}><NavLink>News</NavLink></div>*/}
         {/*<div className={s.item}><NavLink>Music </NavLink></div>*/}
         {/*<div className={s.item}><NavLink>Settings</NavLink></div>*/}
