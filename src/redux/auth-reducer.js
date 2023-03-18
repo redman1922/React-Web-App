@@ -1,3 +1,5 @@
+import {usersAPI} from "../api/api";
+
 const SET_USER_DATA = 'SET_USER_DATA';
 const UNFOLLOW = 'UNFOLLOW';
 
@@ -23,6 +25,14 @@ const authReducer = (state = initialState, action) => {
 
 }
 export const SetAuthUserData = (id,email,login) => ({type: SET_USER_DATA, data: {id,email,login}});
+export const getAuthUserData = () => (dipatch) => {
+    usersAPI.authUser().then(data => {
+        if(data.resultCode === 0){
+            let {id,login,email} = data.data;
+            dipatch(SetAuthUserData(id,email,login));
+        }
+    });
+}
 
 
 export default authReducer;

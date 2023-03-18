@@ -1,3 +1,6 @@
+import {usersAPI} from "../api/api";
+import {toggleIsFetching} from "./users-reducer";
+
 const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -46,6 +49,16 @@ const profileReducer = (state = initianalState, action) => {
 }
 
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile:profile});
+export const getUserProfileThunk = (userId) => (dispatch) => {
+    usersAPI.getIdUserProfile(userId)
+        .then(response => response.json())
+        .catch(err => console.log(err))
+        .then(data => {
+            console.log(data)
+            dispatch(toggleIsFetching(false));
+            dispatch(setUserProfile(data));
+        });
+};
 export const updateNewPostActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText:text});
 export const addPostActionCreator = () => ({type: ADD_POST});
 

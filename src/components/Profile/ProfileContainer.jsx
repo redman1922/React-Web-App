@@ -3,10 +3,11 @@ import s from './Profile.module.css';
 
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {setUserProfile} from "../../redux/profile-reducer";
-import {setTotalUsersCount, toggleIsFetching} from "../../redux/users-reducer";
+import {getUserProfileThunk, setUserProfile} from "../../redux/profile-reducer";
+import {toggleIsFetching} from "../../redux/users-reducer";
 import {useParams} from "react-router-dom";
-import {usersAPI} from "../../api/api";
+import {withAuthNavigate} from "../../hoc/withAuthNavigate";
+import {compose} from "redux";
 
 const ProfileContainer = (props) => {
 
@@ -17,32 +18,29 @@ const ProfileContainer = (props) => {
     }
 
     useEffect(() =>{
-        usersAPI.getIdUserProfile(params.userId)
-            .then(response => response.json())
-            .catch(err => console.log(err))
-            .then(result => {
-                console.log(result)
-                props.toggleIsFetching(false);
-                props.setUserProfile(result);
-                props.setTotalUsersCount(result.totalCount);
-            });
+        props.getUserProfileThunk(params.userId);
     },[]);
 
 
 
-        return (<div className={s.content}>
+        return (
+            <div className={s.content}>
             <Profile profile={props.profile}/>
         </div>
         );
 
 }
 
+
 let mapStateToProps = (state) => {
+
     return {
-        profile: state.profilePage.profile
+        profile: state.profilePage.profile,
+        isAuth: state.auth.isAuth
     }
 }
 
-
-
-export default connect(mapStateToProps,{setUserProfile,toggleIsFetching,setTotalUsersCount})(ProfileContainer);
+export default compose(
+    connect(mapStateToProps,{setUserProfile,toggleIsFetching,getUserProfileThunk}),
+    withAuthNavigate
+)(ProfileContainer);
