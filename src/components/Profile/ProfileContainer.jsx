@@ -3,29 +3,45 @@ import s from './Profile.module.css';
 
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getUserProfileThunk, setUserProfile} from "../../redux/profile-reducer";
-import {toggleIsFetching} from "../../redux/users-reducer";
-import {useParams} from "react-router-dom";
+import {getStatus, getUserProfileThunk, updateStatus} from "../../redux/profile-reducer";
+import {useNavigate, useParams} from "react-router-dom";
 import {withAuthNavigate} from "../../hoc/withAuthNavigate";
 import {compose} from "redux";
 
 const ProfileContainer = (props) => {
 
-    const params = useParams();
-
-    if (!params.userId) {
-        params.userId = 2;
-    }
+    let { userId } = useParams();
+    let navigate = useNavigate();
 
     useEffect(() =>{
-        props.getUserProfileThunk(params.userId);
+        if (!userId) {
+            userId = props.authorizedUserId;
+            if (!userId) {
+                navigate('/login')
+            }
+        }
+
+        if (userId){
+            props.getUserProfileThunk(userId);
+            props.getStatus(userId);
+        }
     },[]);
 
 
 
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if (prevProps.status !== this.props.status) {
+    //         this.setState({
+    //             status: this.props.status
+    //         })
+    //     }
+
+
         return (
             <div className={s.content}>
-            <Profile profile={props.profile}/>
+            <Profile {...props}
+                     profile={props.profile}
+                     status={props.status} update={props.updateStatus} />
         </div>
         );
 
@@ -36,11 +52,13 @@ let mapStateToProps = (state) => {
 
     return {
         profile: state.profilePage.profile,
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        status: state.profilePage.status,
+        authorizedUserId: state.auth.id,
     }
 }
 
 export default compose(
-    connect(mapStateToProps,{setUserProfile,toggleIsFetching,getUserProfileThunk}),
-    withAuthNavigate
+    connect(mapStateToProps,{getUserProfileThunk,getStatus,updateStatus}),
+    // withAuthNavigate
 )(ProfileContainer);

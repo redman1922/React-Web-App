@@ -1,7 +1,6 @@
-import {usersAPI} from "../api/api";
+import {authAPI} from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA';
-const UNFOLLOW = 'UNFOLLOW';
 
 let initialState = {
     id: null,
@@ -15,21 +14,38 @@ const authReducer = (state = initialState, action) => {
         case SET_USER_DATA: {
             return {
                 ...state,
-                ...action.data,
-                isAuth:true
+                ...action.payload
             };
-        };
+        }
         default:
             return state;
     }
 
 }
-export const SetAuthUserData = (id,email,login) => ({type: SET_USER_DATA, data: {id,email,login}});
-export const getAuthUserData = () => (dipatch) => {
-    usersAPI.authUser().then(data => {
+export const SetAuthUserData = (id,email,login, isAuth) => ({type: SET_USER_DATA, payload: {id,email,login,isAuth}});
+export const getAuthUserData = () => (dispatch) => {
+    authAPI.authUser().then(data => {
+        console.log(data)
         if(data.resultCode === 0){
             let {id,login,email} = data.data;
-            dipatch(SetAuthUserData(id,email,login));
+            dispatch(SetAuthUserData(id,email,login, true));
+        }
+    });
+}
+export const login = (email,password, rememberMe,setStatus) => (dispatch) => {
+    authAPI.login(email,password,rememberMe).then(response => {
+        if(response.data.resultCode === 0){
+            dispatch(getAuthUserData())
+        } else {
+            setStatus(response.data.messages)
+        }
+    });
+}
+export const logout = () => (dispatch) => {
+    authAPI.logout().then(response => {
+        console.log('response',response)
+        if(response.data.resultCode === 0){
+            dispatch(getAuthUserData(null,null,null, false));
         }
     });
 }

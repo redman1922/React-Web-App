@@ -16,13 +16,9 @@ export const usersAPI = {
         return instance(DOMEN + `users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data);
     },
-    authUser() {
-        return instance(DOMEN + `auth/me`)
-            .then(response => response.data)
-    },
     getIdUserProfile(userId) {
-        return fetch(DOMEN + `profile/${userId}`)
-            // .then(response => response.data)
+        console.warn('Obsolete method. Please profileApi object.')
+        return profileAPI.getIdUserProfile(userId)
     },
     follow(userId) {
         return instance.post(DOMEN + `follow/${userId}`)
@@ -31,4 +27,29 @@ export const usersAPI = {
         return instance.delete(DOMEN + `follow/${userId}`)
     },
 }
+export const profileAPI = {
 
+    getIdUserProfile(userId) {
+        return fetch(DOMEN + `profile/${userId}`);
+    },
+    getUserStatus(userId) {
+        return instance.get(DOMEN + `profile/status/${userId}`);
+    },
+    updateStatus(status){
+        return instance.put(DOMEN + `profile/status`,{status:status});
+    }
+
+}
+
+export const authAPI={
+    login(email,password,rememberMe = false){
+        return instance.post(DOMEN + 'auth/login',{email,password,rememberMe})
+    },
+    logout(){
+        return instance.delete(DOMEN + 'auth/login')
+    },
+    authUser() {
+        return instance(DOMEN + `auth/me`)
+            .then(response => response.data)
+    },
+}
