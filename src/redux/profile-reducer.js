@@ -1,34 +1,45 @@
+import {profileAPI, usersAPI} from "../api/api";
+import {toggleIsFetching} from "./users-reducer";
+
 const ADD_POST = 'ADD_POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const GET_STATUS = 'GET_STATUS';
 
 let initianalState = {
-        posts: [
-            {id: 1, message: 'Hi, how are you?', like: 15},
-            {id: 2, message: 'It\'s my first post', like: 20},
-            {id: 3, message: 'It\'s my first post', like: 25}
-        ],
-        newPostText:'Denis Davidov'
+    posts: [
+        {id: 1, message: 'Hi, how are you?', like: 15},
+        {id: 2, message: 'It\'s my first post', like: 20},
+        {id: 3, message: 'It\'s my first post', like: 25}
+    ],
+    profile: null,
+    status: '',
 }
 
 const profileReducer = (state = initianalState, action) => {
 
     switch (action.type) {
-        case ADD_POST:{
+        case ADD_POST: {
             let newPost = {
                 id: 5,
-                message: state.newPostText,
+                message: action.newPostText,
                 like: 0
             };
             return {
                 ...state,
-                newPostText:'',
-                posts: [...state.posts,newPost]
+                posts: [...state.posts, newPost]
             }
         }
-        case UPDATE_NEW_POST_TEXT:{
+
+        case SET_USER_PROFILE: {
             return {
                 ...state,
-                newPostText:action.newText
+                profile: action.profile
+            }
+        }
+        case GET_STATUS: {
+            return {
+                ...state,
+                status: action.status
             }
         }
         default:
@@ -36,17 +47,32 @@ const profileReducer = (state = initianalState, action) => {
     }
 }
 
-export const addPostActionCreator = () =>{
-    return{
-        type:'ADD_POST'
-    }
-}
-
-export const updateNewPostActionCreator = (text) =>{
-    return{
-        type:'UPDATE_NEW_POST_TEXT',
-        newText: text
-    }
-}
+export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile:profile});
+export const setStatus = (status) => ({type: GET_STATUS, status:status});
+export const getUserProfileThunk = (userId) => (dispatch) => {
+    usersAPI.getIdUserProfile(userId)
+        .then(response => response.json())
+        .catch(err => console.log(err))
+        .then(data => {
+            dispatch(toggleIsFetching(false));
+            dispatch(setUserProfile(data));
+        });
+};
+export const getStatus = (userId) => (dispatch) => {
+    profileAPI.getUserStatus(userId)
+        .then(response => {
+            console.log(response)
+            dispatch(setStatus(response.data));
+        });
+};
+export const updateStatus = (status) => (dispatch) => {
+    profileAPI.updateStatus(status)
+        .then(response => {
+            if(response.data.resultCode === 0){
+                dispatch(setStatus(status))
+            }
+        })
+};
+export const addPostActionCreator = (newPostText) => ({type: ADD_POST,newPostText:newPostText});
 
 export default profileReducer;
