@@ -1,51 +1,36 @@
-import React from 'react';
+import {useEffect, useState} from "react";
 
+const ProfileStatusWithHooks = (props) => {
 
-class ProfileStatus extends React.Component {
+    const [editMode,setEditMode] = useState(false);
+    const [status,setStatus] = useState(props.status);
 
+    useEffect(()=>{
+        setStatus(props.status)
+    },[props.status])
 
-    state = {
-        editMode: false,
-        status: this.props.status
+    const activeEditMode = () =>{
+        setEditMode(true);
     }
 
-    activeEditMode = () => {
-        this.setState({
-            editMode: true
-        })
+    const deactiveEditMode = () =>{
+        setEditMode(false);
+        props.updateStatus(status);
     }
-    deactiveEditMode = () => {
-        this.setState({
-            editMode: false
-        })
-        this.props.updateStatus(this.state.status);
+
+    const onStatusChange = (e) =>{
+        setStatus(e.currentTarget.value);
     }
-    onStatusChange = (e) => {
-        this.setState({
-            status: e.currentTarget.value
-        });
-    }
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.status !== this.props.status){
-            this.setState({
-                status: this.props.status
-            })
-            console.log('Привет')
+
+    return <div>
+        {
+            (!editMode)
+                ? <div onDoubleClick={activeEditMode}><span>{props.status || 'No status'}</span></div>
+                : <div><input onChange={onStatusChange} autoFocus={true} onBlur={deactiveEditMode}
+                              value={status}/></div>
         }
-    }
 
-    render() {
-        return <div>
-            {
-                (!this.state.editMode)
-                    ? <div onDoubleClick={this.activeEditMode}><span>{this.props.status || 'No status'}</span></div>
-                    : <div><input onChange={this.onStatusChange} autoFocus={true} onBlur={this.deactiveEditMode}
-                                  value={this.state.status}/></div>
-            }
-
-        </div>
-    }
-
+    </div>
 }
 
-export default ProfileStatus;
+export default ProfileStatusWithHooks;
