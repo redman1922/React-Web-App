@@ -4,6 +4,7 @@ import {toggleIsFetching} from "./users-reducer";
 const ADD_POST = 'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const GET_STATUS = 'GET_STATUS';
+const DELETE_STATUS = 'DELETE_STATUS';
 
 let initianalState = {
     posts: [
@@ -42,6 +43,10 @@ const profileReducer = (state = initianalState, action) => {
                 status: action.status
             }
         }
+
+        case DELETE_STATUS:{
+            return {...state, posts: state.posts.filter(p => p.id != action.postId)}
+        }
         default:
             return state;
     }
@@ -49,29 +54,25 @@ const profileReducer = (state = initianalState, action) => {
 
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile:profile});
 export const setStatus = (status) => ({type: GET_STATUS, status:status});
-export const getUserProfileThunk = (userId) => (dispatch) => {
-    usersAPI.getIdUserProfile(userId)
-        .then(response => response.json())
-        .catch(err => console.log(err))
-        .then(data => {
-            dispatch(toggleIsFetching(false));
-            dispatch(setUserProfile(data));
-        });
+export const deletePost = (postId) => ({type: DELETE_STATUS, postId});
+export const getUserProfileThunk = (userId) => async (dispatch) => {
+    const response = await usersAPI.getIdUserProfile(userId)
+            dispatch(toggleIsFetching(false))
+            dispatch(setUserProfile(response.data));
+
+    ;
 };
-export const getStatus = (userId) => (dispatch) => {
-    profileAPI.getUserStatus(userId)
-        .then(response => {
-            console.log(response)
+export const getStatus = (userId) => async (dispatch) => {
+    const response = await profileAPI.getUserStatus(userId);
+
             dispatch(setStatus(response.data));
-        });
 };
-export const updateStatus = (status) => (dispatch) => {
-    profileAPI.updateStatus(status)
-        .then(response => {
+export const updateStatus = (status) => async (dispatch) => {
+    const response = await profileAPI.updateStatus(status);
+
             if(response.data.resultCode === 0){
                 dispatch(setStatus(status))
             }
-        })
 };
 export const addPostActionCreator = (newPostText) => ({type: ADD_POST,newPostText:newPostText});
 
