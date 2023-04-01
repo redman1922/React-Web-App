@@ -1,13 +1,18 @@
-import React, {useEffect} from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import {lazy} from "react";
+import { Suspense } from 'react';
+import {Route, Routes} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/Login";
+// import Login from "./components/Login/Login";
+import Preloader from "./components/common/Preloader/Preloader";
 
+// import DialogsContainer from "./components/Dialogs/DialogsContainer";
+
+const DialogsContainer = lazy(() => import("./components/Dialogs/DialogsContainer"));
+const Login = lazy(() => import("./components/Login/Login"));
 const App = () => {
 
 
@@ -18,47 +23,34 @@ const App = () => {
             <Navbar/>
 
             <div className='app-wrapper-content'>
-                <Routes>
-                    <Route
-                        path='/login'
-                        element={<Login/>}
-                    />
-                    <Route
-                        path='/profile/*'
-                        element={<ProfileContainer/>}
-                    >
-                        <Route path=":userId" element={<ProfileContainer/>}/>
-                        <Route path="me" element={<ProfileContainer/>}/>
-                    </Route>
-                    <Route
-                        path='/dialogs/*'
-                        element={<DialogsContainer/>}
-                    />
-                    <Route
-                        path='/users'
-                        element={<UsersContainer/>}
-                    />
+                <Suspense  fallback={<div><Preloader/></div>}>
+                    <Routes>
+                        <Route
+                            path='/login'
+                            element={<Login/>}
+                        />
+                        <Route
+                            path='/profile/*'
+                            element={<ProfileContainer/>}
+                        >
+                            <Route path=":userId" element={<ProfileContainer/>}/>
+                            <Route path="me" element={<ProfileContainer/>}/>
+                        </Route>
+                        <Route
+                            path='/dialogs/*'
+                            element={<DialogsContainer/>}
+                        />
+                        <Route
+                            path='/users'
+                            element={<UsersContainer/>}
+                        />
 
-                </Routes>
+                    </Routes>
+                </Suspense>
             </div>
 
         </div>
     )
 };
-
-// export const withRouter = (Component) => {
-//     function ComponentWithRouterProp(props) {
-//         let location = useLocation();
-//         let navigate = useNavigate();
-//         let params = useParams();
-//         return (
-//             <Component
-//                 {...props}
-//                 router={{ location, navigate, params }}
-//             />
-//         );
-//     }
-//     return ComponentWithRouterProp;
-// }
 
 export default App;

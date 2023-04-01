@@ -6,7 +6,7 @@ import {Navigate} from "react-router-dom";
 import s from './Login.module.css'
 
 
-const LoginFrom = (props) => {
+const LoginFrom = ({login}) => {
     const validateLogin = (email) => {
         if (!email) {
             return 'Нужно заполнить поле!'
@@ -31,7 +31,7 @@ const LoginFrom = (props) => {
                 rememberMe: false,
             }}
             onSubmit={(formData, {setSubmitting,setStatus}) => {
-                props.login(formData.email, formData.password, formData.rememberMe,setStatus);
+                login(formData.email, formData.password, formData.rememberMe,setStatus);
                 setSubmitting(false);
             }}
         >
@@ -64,16 +64,16 @@ const LoginFrom = (props) => {
     )
 }
 
-const Login = (props) => {
+const Login = ({login,isAuth}) => {
 
 
-    if (props.isAuth) {
+    if (isAuth) {
         return <Navigate to={'/profile'}/>
     }
 
     return <div>
         <h1>Login</h1>
-        <LoginFrom login={props.login}/>
+        <LoginFrom login={login}/>
     </div>
 }
 

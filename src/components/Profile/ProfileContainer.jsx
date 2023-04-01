@@ -20,21 +20,12 @@ const ProfileContainer = (props) => {
                 navigate('/login')
             }
         }
-
         if (userId){
             props.getUserProfileThunk(userId);
             props.getStatus(userId);
         }
+
     },[]);
-
-
-
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     if (prevProps.status !== this.props.status) {
-    //         this.setState({
-    //             status: this.props.status
-    //         })
-    //     }
 
 
         return (

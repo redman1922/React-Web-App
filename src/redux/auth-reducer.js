@@ -1,6 +1,6 @@
 import {authAPI} from "../api/api";
 
-const SET_USER_DATA = 'SET_USER_DATA';
+const SET_USER_DATA = 'auth/SET_USER_DATA';
 
 let initialState = {
     id: null,
@@ -22,32 +22,33 @@ const authReducer = (state = initialState, action) => {
     }
 
 }
-export const SetAuthUserData = (id,email,login, isAuth) => ({type: SET_USER_DATA, payload: {id,email,login,isAuth}});
-export const getAuthUserData = () => (dispatch) => {
-    authAPI.authUser().then(data => {
-        console.log(data)
-        if(data.resultCode === 0){
-            let {id,login,email} = data.data;
-            dispatch(SetAuthUserData(id,email,login, true));
-        }
-    });
+export const SetAuthUserData = (id, email, login, isAuth) => ({
+    type: SET_USER_DATA,
+    payload: {id, email, login, isAuth}
+});
+export const getAuthUserData = () => async (dispatch) => {
+    const response = await authAPI.authUser();
+
+    if (response.data.resultCode === 0) {
+        let {id, login, email} = response.data.data;
+        dispatch(SetAuthUserData(id, email, login, true));
+    }
 }
-export const login = (email,password, rememberMe,setStatus) => (dispatch) => {
-    authAPI.login(email,password,rememberMe).then(response => {
-        if(response.data.resultCode === 0){
-            dispatch(getAuthUserData())
-        } else {
-            setStatus(response.data.messages)
-        }
-    });
+export const login = (email, password, rememberMe, setStatus) => async (dispatch) => {
+    const response = await authAPI.login(email, password, rememberMe);
+
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserData())
+    } else {
+        setStatus(response.data.messages)
+    }
 }
-export const logout = () => (dispatch) => {
-    authAPI.logout().then(response => {
-        console.log('response',response)
-        if(response.data.resultCode === 0){
-            dispatch(getAuthUserData(null,null,null, false));
-        }
-    });
+export const logout = () => async (dispatch) => {
+    const response = await authAPI.logout()
+
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserData(null, null, null, false));
+    }
 }
 
 
