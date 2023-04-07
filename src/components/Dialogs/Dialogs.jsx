@@ -2,7 +2,6 @@
     import s from './Dialogs.module.css';
     import DialogItem from "./DialogItem/DialogItem";
     import Message from "./Message/Message";
-    import {Navigate} from "react-router-dom";
     import {ErrorMessage, Field, Form, Formik} from "formik";
 
     const Dialogs = (props) => {
@@ -16,11 +15,6 @@
         let messagesElements = state.messages.map(m =>
             <Message key={m.id} message={m.message}/>
         );
-
-        // let newMessageBody = state.newMessageBody;
-
-
-        // if (!props.isAuth) return <Navigate to={'/login'}/>;
 
         return (
             <div className={s.dialogs}>
@@ -36,11 +30,7 @@
     }
 
     const AddMessageDialogsFrom = (props) =>{
-        // const validateNewMessage = (newMessage) =>{
-        //     if(!newMessage){
-        //         return 'Нужно заполнить поле!'
-        //     }
-        // }
+
         return (
             <Formik
                 initialValues={{
@@ -50,14 +40,13 @@
                     props.sendMessageCreator(values.newMessageBody);
                 }}
             >
-                {({errors, touched}) => (
+                {() => (
                     <Form>
                         <div><ErrorMessage name="newMessageBody"/></div>
                         <div><Field
                             name="newMessageBody"
                             type="textarea"
                             placeholder='Enter your message'
-                            // validate={validateNewMessage}
                         /></div>
                         <button type="submit">Submit</button>
                     </Form>

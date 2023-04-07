@@ -1,40 +1,39 @@
 import React, {useEffect} from 'react';
 import s from './Profile.module.css';
-
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getStatus, getUserProfileThunk, updateStatus} from "../../redux/profile-reducer";
+import {getStatus, getUserProfileThunk, savePhoto, saveProfile, updateStatus} from "../../redux/profile-reducer";
 import {useNavigate, useParams} from "react-router-dom";
-import {withAuthNavigate} from "../../hoc/withAuthNavigate";
 import {compose} from "redux";
 
 const ProfileContainer = (props) => {
 
-    let { userId } = useParams();
+    let {userId} = useParams();
     let navigate = useNavigate();
 
-    useEffect(() =>{
+    useEffect(() => {
         if (!userId) {
             userId = props.authorizedUserId;
             if (!userId) {
                 navigate('/login')
             }
         }
-        if (userId){
+        if (userId) {
             props.getUserProfileThunk(userId);
             props.getStatus(userId);
         }
 
-    },[]);
+    }, [userId]);
 
 
-        return (
-            <div className={s.content}>
+    return (<div className={s.content}>
             <Profile {...props}
+                     isOwner={!userId}
                      profile={props.profile}
-                     status={props.status} update={props.updateStatus} />
-        </div>
-        );
+                     status={props.status} update={props.updateStatus}
+                     savePhoto={props.savePhoto}
+            />
+        </div>);
 
 }
 
@@ -49,7 +48,11 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default compose(
-    connect(mapStateToProps,{getUserProfileThunk,getStatus,updateStatus}),
-    // withAuthNavigate
+export default compose(connect(mapStateToProps, {
+        getUserProfileThunk,
+        getStatus,
+        updateStatus,
+        savePhoto,
+    saveProfile,
+    }),
 )(ProfileContainer);

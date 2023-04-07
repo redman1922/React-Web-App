@@ -15,12 +15,8 @@ export const usersAPI = {
     getUsers(currentPage = 1, pageSize = 10) {
         return instance(DOMEN + `users?page=${currentPage}&count=${pageSize}`)
     },
-    getIdUserProfile(userId) {
-        console.warn('Obsolete method. Please profileApi object.')
-        return profileAPI.getIdUserProfile(userId)
-    },
     follow(userId) {
-        return instance.post(DOMEN + `follow/${userId}`)
+            return instance.post(DOMEN + `follow/${userId}`)
     },
     unfollow(userId) {
         return instance.delete(DOMEN + `follow/${userId}`)
@@ -36,6 +32,18 @@ export const profileAPI = {
     },
     updateStatus(status){
         return instance.put(DOMEN + `profile/status`,{status:status});
+    },
+    savePhoto(photoFile){
+        let formData = new FormData();
+        formData.append('image',photoFile)
+        return instance.put(DOMEN + `profile/photo`,formData,{
+            headers:{
+                'Content-Type':'multipart/form-data'
+            }
+        })
+    },
+    saveProfile(profile){
+        return instance.put(DOMEN + `profile`,profile);
     }
 
 }

@@ -35,7 +35,7 @@ const LoginFrom = ({login}) => {
                 setSubmitting(false);
             }}
         >
-            {({errors, touched,status}) => (
+            {({status}) => (
 
                 <Form>
                     {status && <div className={s.error}>{status}</div>}
@@ -51,21 +51,16 @@ const LoginFrom = ({login}) => {
                                 placeholder={'Пароль'}
                                 validate={validatePassword}/></div>
                     <div><Field name="rememberMe"
-
                                 type="checkbox"/>rememberMe
                     </div>
-
                     <button type="submit">Submit</button>
-
                 </Form>
-
             )}
         </Formik>
     )
 }
 
 const Login = ({login,isAuth}) => {
-
 
     if (isAuth) {
         return <Navigate to={'/profile'}/>

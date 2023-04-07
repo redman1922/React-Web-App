@@ -2,11 +2,13 @@ import {authAPI} from "../api/api";
 
 const SET_USER_DATA = 'auth/SET_USER_DATA';
 
+
 let initialState = {
     id: null,
     email: null,
     login: null,
     isAuth: false,
+
 };
 
 const authReducer = (state = initialState, action) => {
@@ -38,11 +40,12 @@ export const login = (email, password, rememberMe, setStatus) => async (dispatch
     const response = await authAPI.login(email, password, rememberMe);
 
     if (response.data.resultCode === 0) {
-        dispatch(getAuthUserData())
+        dispatch(getAuthUserData());
     } else {
-        setStatus(response.data.messages)
+        setStatus(response.data.messages);
     }
 }
+
 export const logout = () => async (dispatch) => {
     const response = await authAPI.logout()
 
