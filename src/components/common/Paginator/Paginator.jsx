@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import styles from "./Paginator.module.css";
 
 
@@ -23,8 +23,8 @@ const Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, porti
         <button onClick={() => {setPortionNumber(portionNumber-1)}}>Prev</button> }
         {pages
             .filter(p=> p >= leftPortionPageNumber && p <= rightPortionPageNumber)
-            .map(page => {
-            return <span className={currentPage === page && styles.selecedPage}
+            .map((page,index) => {
+            return <span key={index} className={currentPage === page && styles.selecedPage}
                          onClick={(e) => {
                              onPageChanged(page)
                          }}

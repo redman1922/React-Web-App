@@ -18,7 +18,6 @@ const ProfileInfo = ({profile, isOwner, status, updateStatus, savePhoto,saveProf
         if (e.target.files.length) {
             savePhoto(e.target.files[0])
         }
-        console.log(e.target.files[0])
     }
 
     const handleSubmit = (formData,setStatus) => {

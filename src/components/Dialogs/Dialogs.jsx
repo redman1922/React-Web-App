@@ -8,12 +8,12 @@
 
         let state = props.dialogsPage;
 
-        let dialogsElements = state.dialogs.map(d =>
-            <DialogItem key={d.id} name={d.name} id={d.id}/>
+        let dialogsElements = state.dialogs.map((d,index) =>
+            <DialogItem key={index} name={d.name} id={d.id}/>
         );
 
-        let messagesElements = state.messages.map(m =>
-            <Message key={m.id} message={m.message}/>
+        let messagesElements = state.messages.map((m,index) =>
+            <Message key={index} message={m.message}/>
         );
 
         return (

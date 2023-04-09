@@ -3,12 +3,14 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {withAuthNavigate} from "../../hoc/withAuthNavigate";
 import {compose} from "redux";
+import {getDialogsPage} from "../../redux/selectors/dialogs-selector";
+import {getIsAuth} from "../../redux/selectors/profile-selector";
 
 
 let mapStateToProps = (state) => {
     return {
-        dialogsPage: state.dialogsPage,
-        isAuth: state.auth.isAuth
+        dialogsPage: getDialogsPage(state),
+        isAuth: getIsAuth(state)
     }
 }
 let mapDispatchToProps = (dispatch) => {
@@ -18,8 +20,6 @@ let mapDispatchToProps = (dispatch) => {
         },
     }
 }
-
-
 
 
 export default compose(

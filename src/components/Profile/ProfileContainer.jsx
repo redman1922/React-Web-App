@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {getStatus, getUserProfileThunk, savePhoto, saveProfile, updateStatus} from "../../redux/profile-reducer";
 import {useNavigate, useParams} from "react-router-dom";
 import {compose} from "redux";
+import {getAuthorizedUserId, getIsAuth, getProfile, getStatusText} from "../../redux/selectors/profile-selector";
 
 const ProfileContainer = (props) => {
 
@@ -12,19 +13,14 @@ const ProfileContainer = (props) => {
     let navigate = useNavigate();
 
     useEffect(() => {
-        if (!userId) {
-            userId = props.authorizedUserId;
-            if (!userId) {
-                navigate('/login')
-            }
+        let id = userId || props.authorizedUserId;
+        if (!id) {
+            navigate('/login')
+        } else {
+            props.getUserProfileThunk(id);
+            props.getStatus(id);
         }
-        if (userId) {
-            props.getUserProfileThunk(userId);
-            props.getStatus(userId);
-        }
-
-    }, [userId]);
-
+    }, [userId, props.authorizedUserId]);
 
     return (<div className={s.content}>
             <Profile {...props}
@@ -34,17 +30,15 @@ const ProfileContainer = (props) => {
                      savePhoto={props.savePhoto}
             />
         </div>);
-
 }
-
 
 let mapStateToProps = (state) => {
 
     return {
-        profile: state.profilePage.profile,
-        isAuth: state.auth.isAuth,
-        status: state.profilePage.status,
-        authorizedUserId: state.auth.id,
+        profile: getProfile(state),
+        isAuth: getIsAuth(state),
+        status: getStatusText(state),
+        authorizedUserId: getAuthorizedUserId(state),
     }
 }
 

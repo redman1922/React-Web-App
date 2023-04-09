@@ -35,7 +35,6 @@ let store = {
         return this._state;
     },
     _callSubcriber() {
-        console.log('state changed')
     },
     subscribe (observer) {
         this._callSubcriber = observer;

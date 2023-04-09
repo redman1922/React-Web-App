@@ -2,8 +2,6 @@ import React from "react";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 
-
-
 const Users = ({currentPage,onPageChanged,totalUsersCount,pageSize,users,followingInProgress,unfollow,follow}) => {
 
     let pagesCount = Math.ceil(totalUsersCount / pageSize);

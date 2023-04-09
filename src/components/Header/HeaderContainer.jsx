@@ -2,20 +2,22 @@ import React, {useEffect} from 'react';
 import Header from "./Header";
 import {getAuthUserData, logout} from "../../redux/auth-reducer";
 import {connect} from "react-redux";
+import {getIsAuth} from "../../redux/selectors/profile-selector";
+import {getLogin} from "../../redux/selectors/header-selector";
 
-const HeaderContainer = (props) => {
+const HeaderContainer = ({getAuthUserData,isAuth,login,logout}) => {
 
     useEffect(() => {
-        props.getAuthUserData();
-    }, [])
+        getAuthUserData();
+    }, [getAuthUserData])
 
-    return <Header {...props} />
+    return <Header isAuth={isAuth} login={login} logout={logout} />
 }
 
 let mapStateToProps = (state) => {
     return {
-        isAuth: state.auth.isAuth,
-        login: state.auth.login,
+        isAuth: getIsAuth(state),
+        login: getLogin(state),
     }
 }
 

@@ -4,7 +4,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import{memo} from "react";
 
 const MyPosts = memo(props => {
-    let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} like={p.like}/>);
+    let postsElements = props.posts.map((p,index) => <Post key={index} message={p.message} like={p.like}/>);
 
     return <div className={s.postsBlock}>
         <h3>My posts</h3>
