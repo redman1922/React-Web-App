@@ -1,13 +1,112 @@
+.navMenu {
+    display: flex;
+    box-sizing: border-box;
+    padding: 20px 0;
+}
+
 .nav {
-    grid-area: n;
-    background-color: darkred;
+    display: flex;
+    box-sizing: border-box;
+    padding: 20px 0;
 }
 
 .item a{
-    color: white;
+    color: black;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 400;
 }
 
+.nav .item{
+    margin-right: 25px;
+}
+
+
 .item a.active{
-    color: gold;
+    opacity: 0.5;
+}
+
+.navButton{
+
+}
+
+.navBurger{
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #6C5B7B;
+    position: absolute;
+}
+
+.navBurger:after{
+    content: "";
+    width: 25px;
+    height: 3px;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    background-color: #6C5B7B;
+    top: 16px;
+}
+.navBurger:before{
+    content: "";
+    width: 25px;
+    height: 3px;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    background-color: #6C5B7B;
+    top:8px;
+}
+
+.navBurgerSize{
+    width: 25px;
+    height: 19px;
+    cursor: pointer;
+    display: none;
+}
+
+.navBurgerSize:hover{
+    opacity: 0.5;
+}
+
+.navBurgerTransform{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 59px;
+    left: 0;
+    z-index: 2;
+    transform: translateX(-100%);
+    transition: all 0.2s;
+}
+
+.navActiveBurgerTransform{
+    transform: translateX(0);
+}
+
+.navBurgerContent{
+    width: 100%;
+    height: 100%;
+    background-color: #aa9cb7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.4s;
+}
+
+@media(max-width:455px) {
+    .item a{
+        font-size: 20px;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .navBurgerSize{
+        display: block;
+    }
+
 }
 

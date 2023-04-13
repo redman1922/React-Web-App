@@ -1,12 +1,48 @@
-.header {
-    grid-area: h;
-    background-color: green;
+.headerNavLinkLogin {
+    color: black;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 400;
 }
 
-.header img {
-    width: 20px;
+.headerNavLinkLogin:active {
+    opacity: 0.5;
 }
 
-.loginBlock{
-    float: right;
+.headerNameUser {
+    color: black;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0 20px 0 0;
+}
+
+.headerNameLogOutButton {
+    border-radius: 20px;
+    color: white;
+    background-color: #6C5B7B;
+    border-color: transparent;
+    box-sizing: border-box;
+    padding: 5px;
+    font-size: 21px;
+}
+
+.headerNameLogOutButton:active {
+    opacity: 0.5;
+}
+
+@media (max-width: 650px) {
+    .headerNameUser {
+        display: none;
+    }
+}
+
+@media (max-width: 455px) {
+    .headerNavLinkLogin {
+        font-size: 20px;
+    }
+
+    .headerNameLogOutButton{
+        font-size: 14px;
+    }
 }

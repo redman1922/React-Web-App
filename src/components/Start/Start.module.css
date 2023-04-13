@@ -1,0 +1,53 @@
+.startPosition {
+    text-align: center;
+    margin: 250px 0 0;
+}
+
+.startTitle {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 56px;
+    text-align: center;
+    color: black;
+}
+
+.startText {
+    margin: 40px 0;
+}
+
+.startButton {
+    max-width: 290px;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border-color: transparent;
+    background-color: #6C5B7B;
+    color: white;
+    font-weight: 700;
+}
+
+
+.startButton:active {
+opacity: 0.5;
+}
+
+@media(max-width:455px) {
+
+    .startPosition{
+        margin-top: 50%;
+    }
+    .startTitle{
+        font-size: 30px;
+    }
+
+    .startText {
+        margin: 55px 0;
+        font-size: 20px;
+    }
+
+    .startButton{
+        max-width: 180px;
+    }
+}

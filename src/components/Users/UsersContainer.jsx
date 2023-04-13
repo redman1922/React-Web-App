@@ -17,6 +17,7 @@ import {
     getTotalUsersCount,
     getUserSelector
 } from "../../redux/selectors/user-selector";
+import s from './Users.module.css'
 
 const UsersContainer = (props) => {
 
@@ -29,8 +30,7 @@ const UsersContainer = (props) => {
         props.getUsersThunkCreator(pageNumber, props.pageSize);
     }
 
-    return (<>
-            {props.isFetching ? <Preloader/> : null}
+    return (<div className={s.usersPosition}>
             <Users
                 totalUsersCount={props.totalUsersCount}
                 pageSize={props.pageSize}
@@ -41,7 +41,7 @@ const UsersContainer = (props) => {
                 unfollow={props.unfollow}
                 followingInProgress={props.followingInProgress}
             />
-        </>
+        </div>
 
     )
 }

@@ -1,4 +1,93 @@
 .userPhoto{
-    width: 100px;
-    height: 100px;
+    width: 140px;
+    height: 140px;
+    border-radius: 20px;
+}
+
+.usersPosition{
+    padding: 60px 0 0;
+    text-align: center;
+}
+
+.wrapperUsersList{
+    max-width: 1153px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-content: space-around;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+.wrapperUser{
+    display: block;
+    width: 100%;
+    max-width: 298px;
+    position: relative;
+    background: #c7b9b9;
+    text-decoration: none;
+    box-sizing: border-box;
+    margin: 0 5px 20px;
+    border-radius: 20px;
+    padding: 20px;
+
+}
+
+.userButton{
+    border-radius: 20px;
+    color: white;
+    background-color: #6C5B7B;
+    border-color: transparent;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.userButton:active{
+    opacity: 0.5;
+}
+
+.userButton:disabled{
+    opacity: 0.5;
+    color: gray;
+}
+
+
+.userNames{
+    margin: 20px 0 0;
+}
+
+.userStatus{
+    margin: 20px 0;
+}
+
+@media(max-width:938px) {
+    .wrapperUsersList{
+        justify-content: space-around;
+    }
+}
+
+@media (max-width:455px) {
+    .wrapperUsersList{
+        margin: 20px auto 0;
+    }
+
+}
+
+@media(max-width:349px) {
+    .wrapperUsersList{
+        justify-content: center;
+
+    }
+
+    .wrapperUser{
+        padding: 5px;
+        margin: 0 2% 20px;
+    }
+
+    .userPhoto{
+        width: 110px;
+        height: 110px;
+        border-radius: 20px;
+    }
 }

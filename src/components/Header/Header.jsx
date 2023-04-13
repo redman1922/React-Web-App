@@ -11,13 +11,12 @@ const Header = ({isAuth,login,logout}) => {
        navigate('/login');
     }
 
-    return <header className={s.header}>
-        <div className={s.loginBlock}>
+    return<div>
             {isAuth
-                ? <div>{login} - <button onClick={handleOnClick}>Log out</button></div>
-           :<NavLink to={'/login'} >Login</NavLink>}
+                ? <div ><span className={s.headerNameUser}>{login}</span><button className={s.headerNameLogOutButton} onClick={handleOnClick}><b>Log out</b></button></div>
+           :<NavLink className={s.headerNavLinkLogin} to={'/login'} >Login</NavLink>}
         </div>
-    </header>
+
 }
 
 export default Header;

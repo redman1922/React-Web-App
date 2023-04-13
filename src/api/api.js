@@ -10,7 +10,6 @@ const instance = axios.create({
     }
 });
 
-
 export const usersAPI = {
     getUsers(currentPage = 1, pageSize = 10) {
         return instance(DOMEN + `users?page=${currentPage}&count=${pageSize}`)

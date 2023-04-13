@@ -30,8 +30,8 @@ const LoginFrom = ({login}) => {
                 password: '',
                 rememberMe: false,
             }}
-            onSubmit={(formData, {setSubmitting,setStatus}) => {
-                login(formData.email, formData.password, formData.rememberMe,setStatus);
+            onSubmit={(formData, {setSubmitting, setStatus}) => {
+                login(formData.email, formData.password, formData.rememberMe, setStatus);
                 setSubmitting(false);
             }}
         >
@@ -41,33 +41,38 @@ const LoginFrom = ({login}) => {
                     {status && <div className={s.error}>{status}</div>}
                     <div><ErrorMessage name="email"/></div>
                     <div><Field
+                        className={s.loginInput}
                         name="email"
                         validate={validateLogin}
                         placeholder={'Email'}
                     /></div>
                     <div><ErrorMessage name="password"/></div>
-                    <div><Field name="password"
-                                type="password"
-                                placeholder={'Пароль'}
-                                validate={validatePassword}/></div>
-                    <div><Field name="rememberMe"
-                                type="checkbox"/>rememberMe
+                    <div><Field
+                        className={s.loginInput}
+                        name="password"
+                        type="password"
+                        placeholder={'Password'}
+                        validate={validatePassword}/></div>
+                    <div>rememberMe: <Field className={s.loginCheckbox} name="rememberMe"
+                                type="checkbox"/>
                     </div>
-                    <button type="submit">Submit</button>
+                    <button className={s.loginButton} type="submit">Submit</button>
                 </Form>
             )}
         </Formik>
     )
 }
 
-const Login = ({login,isAuth}) => {
+const Login = ({login, isAuth}) => {
 
     if (isAuth) {
         return <Navigate to={'/profile'}/>
     }
 
-    return <div>
-        <h1>Login</h1>
+    return <div className={s.loginPosition}>
+        <h1 className={s.loginTitle}>Login Form</h1>
+        <p className={s.loginText}>Email: free@samuraijs.com</p>
+        <p className={s.loginText}>Password: free</p>
         <LoginFrom login={login}/>
     </div>
 }
