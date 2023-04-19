@@ -6,6 +6,7 @@ import {getStatus, getUserProfileThunk, savePhoto, saveProfile, updateStatus} fr
 import {useNavigate, useParams} from "react-router-dom";
 import {compose} from "redux";
 import {getAuthorizedUserId, getIsAuth, getProfile, getStatusText} from "../../redux/selectors/profile-selector";
+import Preloader from "../common/Preloader/Preloader";
 
 const ProfileContainer = (props) => {
 
@@ -22,7 +23,11 @@ const ProfileContainer = (props) => {
         }
     }, [userId, props.authorizedUserId]);
 
-    return (<div className={s.content}>
+    if (!props.profile) {
+        return <Preloader/>
+    }
+
+    return (<div className={s.profileContent}>
             <Profile {...props}
                      isOwner={!userId}
                      profile={props.profile}

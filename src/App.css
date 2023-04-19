@@ -18,6 +18,9 @@ body {
     background-color: #d8c8c3;
     display: flex;
     justify-content: center;
+    position: fixed;
+    z-index: 3;
+    width: 100%;
 }
 
 .headerCon{
@@ -32,7 +35,7 @@ body {
 
 .main{
     margin: 0 auto;
-    padding: 0 0 130px;
+    padding: 117px 0 130px;
 }
 
 .footer{
@@ -61,8 +64,10 @@ body {
     .headerCon{
         justify-content: space-between;
         padding: 0 1%;
-        position: fixed;
-        z-index: 3;
+    }
+
+    .main{
+        padding: 59px 0 130px;
     }
 
 }

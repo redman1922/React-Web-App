@@ -1,18 +1,13 @@
 import React, {useState} from 'react';
 import s from './ProfileInfo.module.css';
-import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from "../../../assets/img/user-default.jpg";
 import ProfileDataForm from "./ProfileDataForm";
 
 
-const ProfileInfo = ({profile, isOwner, status, updateStatus, savePhoto,saveProfile}) => {
+const ProfileInfo = ({profile, isOwner, status, updateStatus, savePhoto, saveProfile}) => {
 
-    const [editMode,setEditMode] = useState(false);
-
-    if (!profile) {
-        return <Preloader/>
-    }
+    const [editMode, setEditMode] = useState(false);
 
     const mainPhotoSelectedOn = (e) => {
         if (e.target.files.length) {
@@ -20,51 +15,79 @@ const ProfileInfo = ({profile, isOwner, status, updateStatus, savePhoto,saveProf
         }
     }
 
-    const handleSubmit = (formData,setStatus) => {
-        saveProfile(formData,setStatus).then(()=>{
+    const handleSubmit = (formData, setStatus) => {
+        saveProfile(formData, setStatus).then(() => {
             setEditMode(false);
-        } )
+        })
     }
 
     return <div>
         <div className={s.descriptionBlock}>
-            <img src={profile.photos.large || userPhoto} className={s.mainPhoto}/>+ descripsion
-            {isOwner && <input type={"file"} onChange={mainPhotoSelectedOn}/>}
-            {editMode ? <ProfileDataForm profile={profile} handleSubmit={handleSubmit} />: <ProfileData profile={profile} goToEditMode={() => {setEditMode(true)}} isOwner={isOwner}/>}
+            <div className={s.profileAvatarStatus}>
+                <div className={s.profileAvatar}>
+                    <img src={profile.photos.large || userPhoto} className={s.mainPhoto}/>
+                    {isOwner && <div><input
+                        className={s.profileInfoUploadInput}
+                        id="file-upload"
+                        type={"file"}
+                        onChange={mainPhotoSelectedOn}/>
+                        <label className={s.profileInfoUploadLabel} htmlFor={'file-upload'}></label></div>}
+                </div>
+                <div className={s.contactMargin}>
+                    <b></b> {profile.fullName ? profile.fullName : 'no'}
+                </div>
+                <ProfileStatusWithHooks isOwner={isOwner} status={status} updateStatus={updateStatus}/>
+            </div>
+            <div className={s.profileFormField}>
+                {editMode ? <ProfileDataForm profile={profile} handleSubmit={handleSubmit}/> :
+                    <ProfileData profile={profile} goToEditMode={() => {
+                        setEditMode(true)
+                    }} isOwner={isOwner}/>}
+            </div>
         </div>
-        <ProfileStatusWithHooks isOwner={isOwner}  status={status} updateStatus={updateStatus}/>
     </div>
 }
 
 const Contact = ({contactTitle, contactValue}) => {
-    return <div className={s.contact}><b>{contactTitle}</b>: {contactValue}</div>
+    return ((contactValue)
+        ? <div className={s.contactMargin}><b>{contactTitle}</b>: {contactValue}</div>
+        : <></>);
 }
 
-const ProfileData = ({profile,isOwner, goToEditMode}) => {
+const ProfileData = ({profile, isOwner, goToEditMode}) => {
     return <div>
-        {isOwner && <div><button onClick={goToEditMode}>edit</button></div>}
-        <div>
-            <b>Full name: </b> {profile.fullName ? profile.fullName : 'no'}
+        <hr/>
+        <div className={s.contactInfo}>
+            <b>Profile info</b>
         </div>
-        <div>
+        <hr/>
+        <div className={s.contactMargin}>
             <b>Looking for a job: </b> {profile.lookingForAJob ? 'yes' : 'no'}
         </div>
         {profile.lookingForAJob &&
-            <div>
+            <div className={s.contactMargin}>
                 <b>My professional skills: </b>
                 {profile.lookingForAJobDescription
-                ? profile.lookingForAJobDescription
-                : 'no'}
+                    ? profile.lookingForAJobDescription
+                    : 'no'}
             </div>
         }
-        <div>
+        <div className={s.contactMargin}>
             <b>About me: </b> {profile.aboutMe ? profile.aboutMe : 'no'}
         </div>
-        <div>
-            <b>Contacts: </b> {Object.keys(profile.contacts).map(key => {
-            return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
-        })}
+        <hr/>
+        <div className={s.contactSocialNetworks}>
+            <b>Social networks</b>
         </div>
+        <hr/>
+        <div className={s.contactMargin}>
+            {Object.keys(profile.contacts).map(key => {
+                return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
+            })}
+        </div>
+        {isOwner && <div className={s.contactButtonPosition}>
+            <button onClick={goToEditMode}>edit</button>
+        </div>}
     </div>
 }
 

@@ -1,9 +1,110 @@
 .descriptionBlock{
     padding: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.profileAvatarStatus{
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 0px 10px black;
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding: 30px;
+    margin: 0 20px 0 0;
+}
+
+.profileStatus{
+    margin: 60px 0 0;
+}
+
+.profileAvatar{
+    position: relative;
+}
+
+.profileFormField{
+    max-width: 700px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0px 0px 10px black;
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding: 30px;
+}
+
+.profileInfoUploadInput{
+    display: none;
+}
+
+.profileInfoUploadLabel{
+    width: 200px;
+    height: 200px;
+    display: block;
+    cursor: pointer;
+    opacity: 0;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.profileInfoUploadLabel:hover{
+    width: 200px;
+    height: 200px;
+    display: block;
+    cursor: pointer;
+    opacity: 0.7;
+    background-color: white;
+    position: absolute;
+}
+.profileInfoUploadLabel:after{
+    content: '';
+    width: 200px;
+    height: 200px;
+    background:url('./iconDownload.png');
+    display: block;
+    background-repeat: no-repeat;
+    background-size: 100px 100px;
+    background-position: 50px 50px ;
 }
 
 .mainPhoto{
     max-width: 200px;
+    border-radius: 20px;
+}
+
+.contactMargin{
+    margin: 20px 0;
+    font-size: 22px;
+}
+
+.contactInfo{
+    text-align: center;
+    margin: 20px 0;
+    font-size: 22px;
+}
+
+.contactSocialNetworks{
+    text-align: center;
+    margin: 20px 0;
+    font-size: 22px;
+}
+
+.contactButtonPosition{
+    text-align: center;
+}
+
+.statusText{
+    font-size: 22px;
 }
 
 .contact{

@@ -95,6 +95,16 @@
     transition: all 0.4s;
 }
 
+.navItemsMargin{
+    margin: 20px 0;
+}
+
+.navUserNameMobileVersion{
+    font-weight: 400;
+    font-size: 20px;
+    margin: 40px 0;
+}
+
 @media(max-width:455px) {
     .item a{
         font-size: 20px;
