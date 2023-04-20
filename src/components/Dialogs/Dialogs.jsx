@@ -19,15 +19,17 @@ const Dialogs = (props) => {
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsUsersList}>
-                <h1>List Users</h1>
+                <h1 className={s.dialogsTitleList}>List Users</h1>
                 <hr/>
                 {dialogsElements}
             </div>
             <div className={s.dialogsMessagesField}>
-                <div className={s.dialogsMessages}>
-                    {messagesElements}
+                <div className={s.dialogsMessagesParent}>
+                    <div className={s.dialogsMessages}>
+                        {messagesElements}
+                    </div>
                 </div>
-                <hr style={{marginTop:20,marginBottom:20}}/>
+                <hr style={{marginTop: 20, marginBottom: 20}}/>
                 <AddMessageDialogsFrom sendMessageCreator={props.sendMessageCreator}/>
             </div>
 
@@ -48,14 +50,16 @@ const AddMessageDialogsFrom = (props) => {
             }}
         >
             {() => (
-                <Form >
+                <Form>
                     <><ErrorMessage name="newMessageBody"/></>
                     <div className={s.dialogsForm}><Field
                         name="newMessageBody"
                         type="textarea"
                         placeholder='Enter your message'
                         className={s.dialogsInputForm}
-                    /><button className={s.dialogsInputButton} type="submit">Submit</button></div>
+                    />
+                        <button className={s.dialogsInputButton} type="submit">Submit</button>
+                    </div>
 
                 </Form>
             )}

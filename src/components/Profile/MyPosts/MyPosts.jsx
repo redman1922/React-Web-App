@@ -6,14 +6,13 @@ import {memo} from "react";
 const MyPosts = memo(props => {
     let postsElements = props.posts.map((p, index) => <Post key={index} message={p.message} like={p.like}/>);
 
-    return <div className={s.profilePostsUser}>
-        <div>
-            <hr style={{width:`100%`}}/>
+    return <div className={s.profilePostsUserPosition}>
+        <div className={s.profilePostsUser}>
+            <hr/>
             <h3 className={s.postsMyPosts}>My posts</h3>
             <hr/>
+            <AddNewPostForm addPost={props.addPost}/>
         </div>
-
-        <AddNewPostForm addPost={props.addPost}/>
         <div className={s.posts}>
             {postsElements}
         </div>
@@ -28,19 +27,21 @@ const AddNewPostForm = (props) => {
             }}
             onSubmit={values => {
                 props.addPost(values.newPostText);
-
+                values.newPostText = '';
             }}
         >
             {() => (
                 <Form>
                     <div><ErrorMessage name="newPostText"/></div>
-                    <div><Field
+                    <div className={s.postsNewPost}><Field
                         name="newPostText"
                         type="text"
-                        placeholder='Enter your message'
+                        placeholder='New post'
+                        className={s.postsNewPostInput}
+                    />
+                        <button className={s.postsNewPostButton} type="submit"></button>
+                    </div>
 
-                    /></div>
-                    <button type="submit">Submit</button>
                 </Form>
             )}
         </Formik>

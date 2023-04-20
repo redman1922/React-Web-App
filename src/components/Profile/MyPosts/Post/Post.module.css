@@ -4,7 +4,23 @@
 }
 
 .item {
-    color: darkgreen;
+    color: black;
+    background-color: #aa9cb7;
+    margin: 20px 0;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 20px;
+    flex-wrap: wrap;
+    padding: 5px 0;
+    box-sizing: border-box;
+}
+
+.postText{
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
 }
 
 .item img {

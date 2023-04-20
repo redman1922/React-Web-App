@@ -34,7 +34,7 @@ const ProfileInfo = ({profile, isOwner, status, updateStatus, savePhoto, savePro
                         <label className={s.profileInfoUploadLabel} htmlFor={'file-upload'}></label></div>}
                 </div>
                 <div className={s.contactMargin}>
-                    <b></b> {profile.fullName ? profile.fullName : 'no'}
+                     {profile.fullName ? profile.fullName : 'no'}
                 </div>
                 <ProfileStatusWithHooks isOwner={isOwner} status={status} updateStatus={updateStatus}/>
             </div>
@@ -62,7 +62,7 @@ const ProfileData = ({profile, isOwner, goToEditMode}) => {
         </div>
         <hr/>
         <div className={s.contactMargin}>
-            <b>Looking for a job: </b> {profile.lookingForAJob ? 'yes' : 'no'}
+            <b>Looking for a job: </b> <div className={profile.lookingForAJob ? s.contactActiveJob : s.contactDisableJob}></div>
         </div>
         {profile.lookingForAJob &&
             <div className={s.contactMargin}>
@@ -86,7 +86,7 @@ const ProfileData = ({profile, isOwner, goToEditMode}) => {
             })}
         </div>
         {isOwner && <div className={s.contactButtonPosition}>
-            <button onClick={goToEditMode}>edit</button>
+            <button className={s.contactButton} onClick={goToEditMode}>Edit</button>
         </div>}
     </div>
 }

@@ -7,7 +7,6 @@
 }
 
 .dialogsUsersList{
-    padding: 10px   ;
     color: white;
     background-color: gray;
     padding: 20px;
@@ -35,12 +34,22 @@
     color: white;
 }
 
-.dialogsMessages{
-    overflow: auto;
+.dialogsMessagesParent{
     width: 100%;
     max-width: 700px;
     height: 390px;
+    overflow: hidden;
 }
+
+.dialogsMessages{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 17px;
+    box-sizing: content-box;
+}
+
+
 
 .dialogsForm{
     display: flex;
@@ -79,4 +88,57 @@
 
 .dialogsUsersListPosition{
     text-align: center;
+}
+
+@media(max-width:890px) {
+
+    .dialogs {
+        box-sizing: border-box;
+        padding: 0 1%;
+    }
+
+    .dialogsTitleList{
+        font-size: 23px;
+    }
+}
+
+@media(max-width:550px) {
+    .dialogs {
+        margin: 90px 0;
+    }
+}
+
+@media(max-width:375px) {
+    .dialogsTextUsersList {
+        font-size: 14px;
+    }
+
+    .dialogsTitleList{
+        font-size: 16px;
+    }
+
+    .dialogsMessage{
+        font-size: 12px;
+    }
+
+}
+
+@media(max-width:340px) {
+    .dialogsForm{
+        flex-direction: column;
+    }
+
+    .dialogs{
+        height: 540px;
+    }
+
+    .dialogsInputButton{
+        margin: 5px 0 0;
+    }
+}
+
+@media(max-width:250px) {
+    .dialogsInputButton {
+        padding: 0;
+    }
 }
