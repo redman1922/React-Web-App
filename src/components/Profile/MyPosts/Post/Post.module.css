@@ -28,3 +28,13 @@
     height: 50px;
     border-radius: 30px;
 }
+
+@media(max-width:856px){
+    .item{
+        flex-direction: column;
+    }
+
+    .postText{
+        margin: 5px 0;
+    }
+}

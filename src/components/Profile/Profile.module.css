@@ -8,3 +8,10 @@
     width: 100%;
     margin: 60px auto 0;
 }
+
+@media(max-width:1180px){
+    .profileContent{
+        box-sizing: border-box;
+        padding: 5px;
+    }
+}
