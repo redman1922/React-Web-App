@@ -38,3 +38,16 @@
         margin: 5px 0;
     }
 }
+
+@media (max-width: 375px){
+
+    .item {
+        font-size: 16px;
+    }
+
+    .item img {
+        width: 40px;
+        height: 40px;
+        border-radius: 30px;
+    }
+}

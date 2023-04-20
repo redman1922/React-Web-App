@@ -74,7 +74,7 @@
     position: fixed;
     width: 100vw;
     height: 100vh;
-    top: 59px;
+    top: 117px;
     left: 0;
     z-index: 2;
     transform: translateX(-100%);
@@ -116,6 +116,10 @@
 
     .navBurgerSize{
         display: block;
+    }
+
+    .navBurgerTransform{
+        top: 59px;
     }
 
 }
